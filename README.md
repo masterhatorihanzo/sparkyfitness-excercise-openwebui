@@ -11,6 +11,22 @@ An [Open WebUI](https://openwebui.com/) Tool that lets you log gym workouts thro
 - **Search** — Find exercises by name, equipment, or muscle group
 - **Delete** — Remove incorrect entries
 
+## Mobile App
+
+Open WebUI works great on your phone via [Conduit](https://github.com/cogwheel0/conduit) — a native Open WebUI client for iOS and Android. This enables real-time voice-to-text (STT) workout logging directly from the gym floor.
+
+**Install:**
+- [Google Play](https://play.google.com/store/apps/details?id=app.cogwheel.conduit)
+- [App Store](https://apps.apple.com/us/app/conduit-open-webui-client/id6749840287)
+
+**Key features for gym use:**
+- Voice input — dictate your sets hands-free between exercises
+- SSO/OAuth support — works with Authentik, Authelia, Cloudflare Tunnel, Pangolin, and reverse proxy setups
+- Home screen widgets — quick-launch a new chat or voice call from the home screen
+- Share-sheet integration — share images or text into a prompt
+
+Just connect Conduit to your Open WebUI instance URL, sign in with your existing auth flow, and start logging workouts by voice.
+
 ## Installation
 
 1. In Open WebUI, go to **Workspace → Tools → Add Tool**
@@ -37,6 +53,21 @@ Search for exercises targeting biceps
 ## Data Flow
 
 See [docs/v1-data-flow.md](docs/v1-data-flow.md) for the V1 architecture and data flow documentation.
+
+## Roadmap
+
+### V2 — QR Codes on Equipment
+- **QR code stickers on gym machines** — Scan a QR code on the equipment to auto-identify the exercise instead of remembering machine tag numbers
+- Each QR code encodes the exercise name or equipment tag, so you just scan and say "3 sets of 10 at 50kg"
+- Eliminates the need for the `equipment_tag_map` valve — the mapping lives on the machine itself
+- Could link directly into Conduit or the Open WebUI chat with pre-filled context
+
+### Future Ideas
+- Workout templates and routines
+- Rep/set suggestions based on history and progression
+- Rest timer integration
+- Body weight and measurement tracking
+- Export workout data (CSV, JSON)
 
 ## Requirements
 
