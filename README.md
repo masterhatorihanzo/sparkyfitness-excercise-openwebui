@@ -57,7 +57,7 @@ See [docs/v1-data-flow.md](docs/v1-data-flow.md) for the V1 architecture and dat
 ## Roadmap
 
 ### V2 — QR Codes on Equipment
-- **QR code stickers on gym machines** — Scan a QR code on the equipment to auto-identify the exercise instead of remembering machine tag numbers
+- **QR code stickers on gym machines** — Scan a QR code instead of reading out the machine's tag number to the LLM
 - Each QR code encodes the exercise name or equipment tag, so you just scan and say "3 sets of 10 at 50kg"
 - Eliminates the need for the `equipment_tag_map` valve — the mapping lives on the machine itself
 - Could link directly into the Open WebUI PWA chat with pre-filled context
