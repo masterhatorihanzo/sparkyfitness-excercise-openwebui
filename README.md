@@ -11,21 +11,21 @@ An [Open WebUI](https://openwebui.com/) Tool that lets you log gym workouts thro
 - **Search** — Find exercises by name, equipment, or muscle group
 - **Delete** — Remove incorrect entries
 
-## Mobile App
+## Mobile Access (PWA)
 
-Open WebUI works great on your phone via [Conduit](https://github.com/cogwheel0/conduit) — a native Open WebUI client for iOS and Android. This enables real-time voice-to-text (STT) workout logging directly from the gym floor.
+Open WebUI ships as a Progressive Web App (PWA), so you can install it to your phone's home screen for a native app-like experience — no app store needed. This enables voice-to-text (STT) workout logging directly from the gym floor.
 
-**Install:**
-- [Google Play](https://play.google.com/store/apps/details?id=app.cogwheel.conduit)
-- [App Store](https://apps.apple.com/us/app/conduit-open-webui-client/id6749840287)
+**Install on Android (Chrome):**
+1. Open your Open WebUI URL in Chrome
+2. Tap the three-dot menu → **"Install app"** (or **"Add to Home screen"**)
+3. Confirm and tap **Install**
 
-**Key features for gym use:**
-- Voice input — dictate your sets hands-free between exercises
-- SSO/OAuth support — works with Authentik, Authelia, Cloudflare Tunnel, Pangolin, and reverse proxy setups
-- Home screen widgets — quick-launch a new chat or voice call from the home screen
-- Share-sheet integration — share images or text into a prompt
+**Install on iOS (Safari):**
+1. Open your Open WebUI URL in Safari
+2. Tap the **Share** button → **"Add to Home Screen"**
+3. Tap **Add**
 
-Just connect Conduit to your Open WebUI instance URL, sign in with your existing auth flow, and start logging workouts by voice.
+The PWA runs full-screen without the browser URL bar and supports voice input for hands-free logging between sets.
 
 ## Installation
 
@@ -60,7 +60,7 @@ See [docs/v1-data-flow.md](docs/v1-data-flow.md) for the V1 architecture and dat
 - **QR code stickers on gym machines** — Scan a QR code on the equipment to auto-identify the exercise instead of remembering machine tag numbers
 - Each QR code encodes the exercise name or equipment tag, so you just scan and say "3 sets of 10 at 50kg"
 - Eliminates the need for the `equipment_tag_map` valve — the mapping lives on the machine itself
-- Could link directly into Conduit or the Open WebUI chat with pre-filled context
+- Could link directly into the Open WebUI PWA chat with pre-filled context
 
 ### Future Ideas
 - Workout templates and routines
