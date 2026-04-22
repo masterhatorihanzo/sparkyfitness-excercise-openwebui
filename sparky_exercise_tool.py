@@ -212,22 +212,29 @@ class Tools:
     async def log_exercise(
         self,
         exercise_name: str,
-        sets_data: str,
+        num_sets: int,
+        reps_per_set: int,
+        weight_kg: Optional[float] = None,
         entry_date: Optional[str] = None,
         duration_minutes: Optional[int] = None,
         notes: Optional[str] = None,
         exercise_id: Optional[str] = None,
+        sets_data: Optional[str] = None,
     ) -> str:
         """
         Log an exercise entry to SparkyFitness with sets, reps, and weight.
-        First search for the exercise to get its ID, or provide the ID directly.
+        For uniform sets (same reps/weight each set), use num_sets + reps_per_set + weight_kg.
+        For varied sets (different reps/weight per set), provide sets_data JSON instead.
 
         :param exercise_name: Name of the exercise (used if exercise_id not provided; will search for a match).
-        :param sets_data: JSON array of sets. Each set: {"reps": number, "weight": number (kg), "set_type": "Working Set"|"Warmup"|"Drop Set"|"Failure", "duration": seconds (optional), "rest_time": seconds (optional)}. Example: [{"reps": 10, "weight": 50}, {"reps": 8, "weight": 55}]
+        :param num_sets: Number of sets to log (e.g. 3). Ignored if sets_data is provided.
+        :param reps_per_set: Number of reps per set (e.g. 10). Ignored if sets_data is provided.
+        :param weight_kg: Weight in kilograms per set (e.g. 10.0). Ignored if sets_data is provided.
         :param entry_date: Date in YYYY-MM-DD format. Defaults to today.
         :param duration_minutes: Total duration in minutes (optional).
         :param notes: Optional notes for this entry.
         :param exercise_id: UUID of the exercise (if known). Skips search if provided.
+        :param sets_data: Advanced: JSON array of sets for varied reps/weight. Each set: {"reps": number, "weight": number, "set_type": "Working Set"|"Warmup"|"Drop Set"|"Failure"}. Overrides num_sets/reps_per_set/weight_kg if provided.
         :return: Confirmation message with the logged entry details.
         """
         # Resolve exercise_id if not provided
@@ -277,11 +284,19 @@ class Tools:
             except requests.exceptions.RequestException as e:
                 return f"Error searching for exercise: {e}"
 
-        # Parse sets
-        try:
-            sets = json.loads(sets_data) if isinstance(sets_data, str) else sets_data
-        except json.JSONDecodeError as e:
-            return f"Invalid sets_data JSON: {e}"
+        # Build sets from scalar params or parse sets_data JSON
+        if sets_data:
+            try:
+                sets = json.loads(sets_data) if isinstance(sets_data, str) else sets_data
+            except json.JSONDecodeError as e:
+                return f"Invalid sets_data JSON: {e}"
+        else:
+            sets = []
+            for i in range(num_sets):
+                s = {"reps": reps_per_set}
+                if weight_kg is not None:
+                    s["weight"] = weight_kg
+                sets.append(s)
 
         # Ensure each set has required set_number and set_type
         for i, s in enumerate(sets):
